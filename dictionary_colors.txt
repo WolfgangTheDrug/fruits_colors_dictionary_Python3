@@ -1,0 +1,63 @@
+A
+ash - popielaty
+
+B
+beige - bez
+black - czarny
+blue - niebieski
+brown - brazowy
+
+C
+copper - miedziany
+
+D
+dark blue - granat
+
+E
+emerald - szmaragdowy
+
+G
+golden - zloty
+green - zielony
+grey - szary
+
+I
+ivory - w kolorze kosci sloniowej
+
+M
+magenta - karmazynowy
+
+N
+navy-blue - granat
+
+O
+off-white - kremowy
+olive - oliwkowy
+orange - pomaranczowy
+
+P
+peach - brzoskwiniowy
+pink - rozowy
+purple - fioletowy
+
+R
+red - czerwony
+ruby - rubinowy
+
+S
+salmon - lososiowy
+sand - piaskowy
+scarlet - szkarlatny
+silver - srebrny
+
+T
+turquoise - turkusowy
+
+V
+violet - fioletowy
+
+W
+white - bialy
+
+Y
+yellow - zolty
