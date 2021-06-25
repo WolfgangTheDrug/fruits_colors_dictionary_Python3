@@ -1,5 +1,6 @@
 import argparse
 import re # regular expressions
+import os
 
 parser = argparse.ArgumentParser(
 	description='Pol-Eng Fruits & Colors Dictionary API formatter. Takes a file, (if needed) translates it to the standard form: pol - eng and converts it into a JSON format database.')
@@ -13,7 +14,7 @@ parser.add_argument(
 	help='Add this flag if your source file has translation direction `pol-eng`')
 args = parser.parse_args()
 
-# # # 
+# # #
 
 def normalize_spaces(line):
 	return re.sub(r' +', r' ', line)
@@ -37,14 +38,17 @@ def apply_format(line):
 # # #
 
 SOURCE_NAME = args.file_name
-SINK_NAME = args.file_name.split(".")[0] + '.json'
+SINK_NAME = args.file_name.split(".")[0] + '.json'	
 
 # # #
 
-with open(SOURCE_NAME, 'r') as source:
-	with open(SINK_NAME, 'w') as sink:
-		[sink.write(apply_format(line)) for line in source.readlines() if not re.match(r'[A-Z]\n|\n', line)]
-		
+try:
+	with open(SOURCE_NAME, 'r') as source:
+		with open(SINK_NAME, 'w') as sink:
+			[sink.write(apply_format(line)) for line in source.readlines() if not re.match(r'[A-Z]\n|\n', line)]
+except:
+	print('File {} probably doesn\'t exist...'.format(SOURCE_NAME), file=stderr)
+	sys.exit(1)
 # # # TESTS # # #
  
 """----> test 1: reading file
