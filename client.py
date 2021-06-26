@@ -15,7 +15,7 @@ def exit_handler(signum, frame):
 	raise SystemExit('\nThe programme has been closed.')
 
 def stylish(response):
-	return "The following translations {}{}has been found{}: [{}]".format(color.GREEN, color.UNDERLINE, color.END, response)
+	return "The following translations {}{}has been found{}: [{}]".format(color.YELLOW, color.BOLD, color.END, response)
 # # #
 
 BUFFER_SIZE = 2048

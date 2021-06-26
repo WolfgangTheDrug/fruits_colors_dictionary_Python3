@@ -26,11 +26,11 @@ def normalize_spaces_and_separators(line):
 	return normalize_spaces(normalize_separators(line))
 
 def reverse_translation_direction(line): # fully normalized
-	return ' '.join(line.split()[::-1]) if not args.pl else line 
+	return ' - '.join(line.split(' - ')[::-1]) if not args.pl else line 
 
 def jsonize_line(line): # fully normalized and reversed if needed
 	pol, eng = line.split(' - ')
-	result = '\n\t\"pol\": \"{}\", \n\t\"eng\": \"{}\"\n'.format(pol, eng.strip('\n'))
+	result = '\n\t\"pol\": \"{}\", \n\t\"eng\": \"{}\"\n'.format(pol.strip('\n'), eng.strip('\n'))
 	return '{' + result + '},\n'
 
 def apply_format(line):
