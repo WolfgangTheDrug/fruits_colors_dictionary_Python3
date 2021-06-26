@@ -18,9 +18,22 @@ def exit_handler(signum, frame):
 def center(text, character=""):
 	return ('{:' + character + '^50}').format(text)
 
-def preamble():
-	return "\n" + center("The following translations {}has been found{}:").format(color.DARKCYAN + color.BOLD, color.END) + "\n" +color.PURPLE + color.UNDERLINE + center(" English - Polish ", "*") + color.END
+def preamble(word):
+	return "\n" + center("The following translations of the word \'{}\' {}have been found{}:").format(word, color.DARKCYAN + color.BOLD, color.END) + "\n" + color.PURPLE + color.UNDERLINE + center(" English - Polish ", "*") + color.END
 
+def word_not_found(word):
+	return "\n" + color.RED + color.UNDERLINE + center(" Alert ", "*") + color.END + "\n" + center("Any translation of the word \'{}\' was ".format(word) + color.RED + color.UNDERLINE + "not found" + color.END)
+
+def strip(array_of_str):
+	tmp = []
+	[tmp.append(el.strip()) for el in array_of_str]
+	return tmp
+
+def listize(string):
+	tmp = string.split(",")
+	tmp = strip(tmp)
+	return tmp
+	
 # # #
 
 BUFFER_SIZE = 2048
@@ -38,7 +51,6 @@ class color:
 	UNDERLINE = "\033[4m"
 	END = "\033[0m"
 
-WORD_NOT_FOUND = center("This word was " + color.RED + color.UNDERLINE + "not found" + color.END)
 # # #
 
 signal.signal(signal.SIGINT, exit_handler)
@@ -59,18 +71,20 @@ with socket.socket() as sock:
 	sock.connect((HOST, PORT))
 	while(True):
 		request = input("\n>")
-		sock.sendall(request.encode())
-		response = sock.recv(BUFFER_SIZE).decode()
-		
-		if response == "x":
-			print(WORD_NOT_FOUND) 
-		else:
-			response = "[" + response.replace("'",'"') + "]"
-			response = json.loads(response)
-			print(preamble())
-			for position in response:
-				translations = list(position.values())
-				print(center("{} - {}".format(translations[0], translations[1])))
+		requests = listize(request)
+		for request in requests:
+			sock.sendall(request.encode())
+			response = sock.recv(BUFFER_SIZE).decode()
+			
+			if response == "x":
+				print(word_not_found(request)) 
+			else:
+				response = "[" + response.replace("'",'"') + "]"
+				response = json.loads(response)
+				print(preamble(request))
+				for position in response:
+					translations = list(position.values())
+					print(center("{} - {}".format(translations[0], translations[1])))
 	sock.shutdown(socket.SHUT_RDWR)
 	sock.close()
 

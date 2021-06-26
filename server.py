@@ -14,6 +14,7 @@ args = parser.parse_args()
 def exit_handler(signum, frame):
 	raise SystemExit("\nThe programme has been closed.")
 
+
 # # #
 
 BUFFER_SIZE = 2048
@@ -43,6 +44,7 @@ with socket.socket() as sock:
 		print("Connected with ", address)
 
 		while data: 
+			#words = listize(data.decode()) # list of words 
 			word = data.decode()
 			response = []
 			[response.append(str(i)) for i in database if i["pol"] == word]
