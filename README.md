@@ -38,4 +38,5 @@ The translations were taken from:
 * [fruits ](https://www.ingless.pl/artykul/owoce-w-jezyku-angielskim/)
 * [colors ](https://speakin.pl/kolory-po-angielsku/)
 * [colorfull terminal](https://stackoverflow.com/questions/287871/how-to-print-colored-text-to-the-terminal)
+
 and changed slighly.
