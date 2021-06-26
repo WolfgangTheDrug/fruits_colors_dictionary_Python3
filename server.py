@@ -16,26 +16,12 @@ def exit_handler(signum, frame):
 
 # # #
 
-BUFFER_SIZE = 512
+BUFFER_SIZE = 2048
 PORT = args.port
-
-class color:
-	PURPLE = '\033[95m'
-	CYAN = '\033[96m'
-	DARKCYAN = '\033[36m'
-	BLUE = '\033[94m'
-	GREEN = '\033[92m'
-	YELLOW = '\033[93m'
-	RED = '\033[91m'
-	BOLD = '\033[1m'
-	UNDERLINE = '\033[4m'
-	END = '\033[0m'
 
 # # #
 
 signal.signal(signal.SIGINT, exit_handler)
-
-# # #
 
 # # #
 
@@ -58,10 +44,10 @@ with socket.socket() as sock:
 
 		while data: 
 			word = data.decode()
-			
-			[connected_socket.sendall("\nThe word {} can be translated from polish to english and means {}\n".format(color.RED + i['pol'] + color.END, color.BLUE + i['eng'] + color.END).encode()) for i in database if i['pol'] == word]
-			[connected_socket.sendall("\nThe word {} can be translated from english to polish and means {}\n".format(color.RED + i['eng'] + color.END, color.BLUE + i['pol'] + color.END).encode()) for i in database if i['eng'] == word]
-			
+			response = []
+			[response.append(str(i)) for i in database if i['pol'] == word]
+			[response.append(str(i)) for i in database if i['eng'] == word]
+			connected_socket.sendall(','.join(response).encode()) if response else connected_socket.sendall('x'.encode())
 			data = connected_socket.recv(BUFFER_SIZE)
 			
 		connected_socket.shutdown(socket.SHUT_RDWR)
